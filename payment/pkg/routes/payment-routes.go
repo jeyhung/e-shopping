@@ -1,8 +1,9 @@
 package routes
 
 import (
+	"payment/pkg/controllers"
+
 	"github.com/gorilla/mux"
-	"github.com/jeyhung/e-shopping/payment/controllers"
 )
 
 var RegisterPaymentRoutes = func(router *mux.Router) {
