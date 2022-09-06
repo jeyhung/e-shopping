@@ -1,15 +1,15 @@
 package com.jeyhung.stock.service.impl;
 
-import catalog.brands.application.dto.BrandCreateDto;
-import catalog.brands.application.dto.BrandKeyValueDto;
-import catalog.brands.application.dto.BrandListItemDto;
-import catalog.brands.application.dto.BrandUpdateDto;
-import catalog.brands.application.exception.BrandAlreadyExistsException;
-import catalog.brands.application.exception.BrandNotFoundException;
-import catalog.brands.domain.model.Brand;
-import catalog.brands.domain.repository.BrandRepository;
-import catalog.sequences.application.SequenceService;
+import com.jeyhung.stock.dto.BrandCreateDto;
+import com.jeyhung.stock.dto.BrandKeyValueDto;
+import com.jeyhung.stock.dto.BrandListItemDto;
+import com.jeyhung.stock.dto.BrandUpdateDto;
+import com.jeyhung.stock.exception.DataAlreadyExistsException;
+import com.jeyhung.stock.exception.DataNotFoundException;
+import com.jeyhung.stock.model.Brand;
+import com.jeyhung.stock.repository.BrandRepository;
 import com.jeyhung.stock.service.BrandService;
+import com.jeyhung.stock.service.SequenceService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -81,20 +81,20 @@ public class BrandServiceImpl implements BrandService {
 
     private Brand findById(long id) {
         return brandRepository.findById(id)
-                .orElseThrow(() -> new BrandNotFoundException());
+                .orElseThrow(() -> new DataNotFoundException());
     }
 
     private void validateNameNotExists(String name) {
         Optional<Brand> optionalBrand = brandRepository.findByName(name);
         if (optionalBrand.isPresent()) {
-            throw new BrandAlreadyExistsException();
+            throw new DataAlreadyExistsException();
         }
     }
 
     private void validateNameNotExists(long id, String name) {
         Optional<Brand> optionalBrand = brandRepository.findByName(name);
         if (optionalBrand.isPresent() && optionalBrand.get().getId() != id) {
-            throw new BrandAlreadyExistsException();
+            throw new DataAlreadyExistsException();
         }
     }
 }

@@ -1,9 +1,9 @@
 package com.jeyhung.stock.service;
 
-import catalog.brands.application.dto.BrandCreateDto;
-import catalog.brands.application.dto.BrandKeyValueDto;
-import catalog.brands.application.dto.BrandListItemDto;
-import catalog.brands.application.dto.BrandUpdateDto;
+import com.jeyhung.stock.dto.BrandCreateDto;
+import com.jeyhung.stock.dto.BrandKeyValueDto;
+import com.jeyhung.stock.dto.BrandListItemDto;
+import com.jeyhung.stock.dto.BrandUpdateDto;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;

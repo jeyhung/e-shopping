@@ -1,8 +1,5 @@
 package com.jeyhung.stock.config;
 
-import com.google.common.base.Predicate;
-import com.google.common.base.Predicates;
-import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,40 +12,42 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+import java.util.Arrays;
 import java.util.List;
+
+import static com.jeyhung.stock.shared.Constants.*;
 
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-    @Value("${spring.contact.name}")
-    private String contactName;
+    private final String contactName;
+    private final String contactUrl;
+    private final String contactEmail;
+    private final String projectTitle;
+    private final String projectDescription;
+    private final String projectVersion;
 
-    @Value("${spring.contact.url}")
-    private String contactUrl;
-
-    @Value("${spring.contact.email}")
-    private String contactEmail;
-
-    @Value("${spring.project.title}")
-    private String projectTitle;
-
-    @Value("${spring.project.description}")
-    private String projectDescription;
-
-    @Value("${spring.project.version}")
-    private String projectVersion;
-
-    private final String AUTHORIZATION = "Authorization";
-    private final String JWT_KEY = "JWT";
-    private final String HEADER = "header";
+    public SwaggerConfig(@Value("${swagger.contact.name}") String contactName,
+                         @Value("${swagger.contact.email}") String contactEmail,
+                         @Value("${swagger.contact.url}") String contactUrl,
+                         @Value("${swagger.project.title}") String projectTitle,
+                         @Value("${swagger.project.description}") String projectDescription,
+                         @Value("${swagger.project.version}") String projectVersion) {
+        this.contactName = contactName;
+        this.contactUrl = contactUrl;
+        this.contactEmail = contactEmail;
+        this.projectTitle = projectTitle;
+        this.projectDescription = projectDescription;
+        this.projectVersion = projectVersion;
+    }
 
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(getApiInfo())
                 .forCodeGeneration(true)
-                .securityContexts(Lists.newArrayList(securityContext()))
-                .securitySchemes(Lists.newArrayList(jwt()))
+                .securityContexts(Arrays.asList(securityContext()))
+                .securitySchemes(Arrays.asList(jwt()))
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
@@ -56,13 +55,11 @@ public class SwaggerConfig {
     }
 
     private ApiInfo getApiInfo() {
-        Contact contact = new Contact(contactName, contactUrl, contactEmail);
-
         return new ApiInfoBuilder()
                 .title(projectTitle)
                 .description(projectDescription)
                 .version(projectVersion)
-                .contact(contact)
+                .contact(new Contact(contactName, contactUrl, contactEmail))
                 .build();
     }
 
@@ -73,18 +70,13 @@ public class SwaggerConfig {
     private SecurityContext securityContext() {
         return SecurityContext.builder()
                 .securityReferences(defaultAuth())
-                .forPaths(paths())
                 .build();
-    }
-
-    private Predicate<String> paths() {
-        return Predicates.and(Predicates.not(PathSelectors.regex("/error")));
     }
 
     private List<SecurityReference> defaultAuth() {
         AuthorizationScope authorizationScope = new AuthorizationScope("global", null);
         AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
         authorizationScopes[0] = authorizationScope;
-        return Lists.newArrayList(new SecurityReference("JWT", authorizationScopes));
+        return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
     }
 }

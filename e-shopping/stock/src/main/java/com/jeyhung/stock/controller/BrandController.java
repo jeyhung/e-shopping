@@ -1,10 +1,10 @@
 package com.jeyhung.stock.controller;
 
-import catalog.brands.application.BrandService;
-import catalog.brands.application.dto.BrandCreateDto;
-import catalog.brands.application.dto.BrandKeyValueDto;
-import catalog.brands.application.dto.BrandListItemDto;
-import catalog.brands.application.dto.BrandUpdateDto;
+import com.jeyhung.stock.dto.BrandCreateDto;
+import com.jeyhung.stock.dto.BrandKeyValueDto;
+import com.jeyhung.stock.dto.BrandListItemDto;
+import com.jeyhung.stock.dto.BrandUpdateDto;
+import com.jeyhung.stock.service.BrandService;
 import io.swagger.annotations.Api;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

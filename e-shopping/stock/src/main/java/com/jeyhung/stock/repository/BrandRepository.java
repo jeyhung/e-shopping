@@ -1,6 +1,6 @@
 package com.jeyhung.stock.repository;
 
-import catalog.brands.domain.model.Brand;
+import com.jeyhung.stock.model.Brand;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.repository.query.Param;
 
