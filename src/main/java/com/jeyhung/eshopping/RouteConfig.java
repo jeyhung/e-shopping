@@ -1,4 +1,4 @@
-package io.github.jeyhung.apigateway;
+package com.jeyhung.eshopping;
 
 import org.springframework.cloud.gateway.route.RouteLocator;
 import org.springframework.cloud.gateway.route.builder.RouteLocatorBuilder;
