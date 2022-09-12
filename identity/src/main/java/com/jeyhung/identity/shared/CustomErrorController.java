@@ -1,5 +1,6 @@
 package com.jeyhung.identity.shared;
 
+import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import static org.springframework.http.HttpStatus.valueOf;
 
 @Slf4j
 @Controller
+@Api(value = "custom-error", hidden = true)
 public class CustomErrorController implements ErrorController {
 
     @RequestMapping(value = "error")

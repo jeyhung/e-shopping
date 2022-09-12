@@ -1,7 +1,7 @@
 package com.jeyhung.identity.shared;
 
-import identity.users.application.exception.AuthFailedException;
-import identity.users.application.exception.UserNotFoundException;
+import com.jeyhung.identity.shared.exception.AuthFailedException;
+import com.jeyhung.identity.shared.exception.DataNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -56,7 +56,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return buildResponseEntity(apiError);
     }
 
-    @ExceptionHandler({UserNotFoundException.class})
+    @ExceptionHandler(DataNotFoundException.class)
     protected ResponseEntity<Object> handleNotFoundException(Exception ex) {
         log.error("Not found exception", ex);
         ApiError apiError = new ApiError(NOT_FOUND);

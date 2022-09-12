@@ -12,7 +12,7 @@ import java.util.List;
 @RequestMapping(value = "users/")
 public class UserController {
 
-    @GetMapping(value = "/")
+    @GetMapping(value = "/all")
     public List<UserDto> get() {
         List<UserDto> userDtos = new ArrayList<>();
         UserDto userDto = UserDto.builder().id(1).firstName("Jeyhun").lastName("Gasimov").build();
