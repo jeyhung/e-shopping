@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -15,7 +16,7 @@ import static org.springframework.http.HttpStatus.valueOf;
 
 @Slf4j
 @Controller
-@Api(value = "custom-error", hidden = true)
+@ApiIgnore
 public class CustomErrorController implements ErrorController {
 
     @RequestMapping(value = "error")

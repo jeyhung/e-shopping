@@ -61,7 +61,7 @@ class WebSecurity {
 
                 //make swagger endpoints public
                 .antMatchers( "/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs", "/webjars/**").permitAll()
-                .antMatchers("/v2/**").permitAll()
+                .antMatchers("/users/**").permitAll()
                 .antMatchers("/actuator/**").permitAll()
                 .antMatchers("/favicon.ico").permitAll()
 

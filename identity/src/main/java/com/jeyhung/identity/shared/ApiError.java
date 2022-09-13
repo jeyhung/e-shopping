@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.hibernate.validator.internal.engine.path.PathImpl;
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 
@@ -20,9 +21,8 @@ import java.util.Set;
 
 @Data
 @JsonTypeInfo(include = JsonTypeInfo.As.WRAPPER_OBJECT, use = JsonTypeInfo.Id.CUSTOM, property = "error", visible = true)
-@JsonTypeIdResolver(ApiError.LowerCaseClassNameResolver.class)
+@JsonTypeIdResolver(LowerCaseClassNameResolver.class)
 public class ApiError {
-
     private HttpStatus status;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy hh:mm:ss")
     private LocalDateTime timestamp;
@@ -108,7 +108,9 @@ public class ApiError {
     }
 
 
-    abstract class ApiSubError {}
+    abstract class ApiSubError {
+
+    }
 
     @Data
     @EqualsAndHashCode(callSuper = false)
@@ -124,23 +126,22 @@ public class ApiError {
             this.message = message;
         }
     }
-
-    class LowerCaseClassNameResolver extends TypeIdResolverBase {
-
-        @Override
-        public String idFromValue(Object value) {
-            return value.getClass().getSimpleName().toLowerCase();
-        }
-
-        @Override
-        public String idFromValueAndType(Object value, Class<?> suggestedType) {
-            return idFromValue(value);
-        }
-
-        @Override
-        public JsonTypeInfo.Id getMechanism() {
-            return JsonTypeInfo.Id.CUSTOM;
-        }
-    }
 }
 
+class LowerCaseClassNameResolver extends TypeIdResolverBase {
+
+    @Override
+    public String idFromValue(Object value) {
+        return value.getClass().getSimpleName().toLowerCase();
+    }
+
+    @Override
+    public String idFromValueAndType(Object value, Class<?> suggestedType) {
+        return idFromValue(value);
+    }
+
+    @Override
+    public JsonTypeInfo.Id getMechanism() {
+        return JsonTypeInfo.Id.CUSTOM;
+    }
+}
